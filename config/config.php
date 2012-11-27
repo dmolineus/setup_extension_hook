@@ -10,7 +10,10 @@
  * @license   GNU/LGPL 
  * @copyright 2012 David Molineus netzmacht creative 
  */
- 
+
+// initialize hook array
+// hook will be passed to the parseTemplate hook
+// $GLOBALS['SETUP_EXT_HOOK']['extension-name'][] = array('Class', 'method')
 if(!isset($GLOBALS['SETUP_EXT_HOOK']))
 {
 	$GLOBALS['SETUP_EXT_HOOK'] = array();
