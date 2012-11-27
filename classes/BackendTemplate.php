@@ -15,7 +15,12 @@
 
 class BackendTemplate extends Contao\BackendTemplate
 {
+	/**
+	 * store info if hook was already added.
+	 * we only have to do it one time
+	 */
 	protected static $blnHookAdded = false;
+	
 	
 	/**
 	 * extend the parse metho to provide our new hooks
@@ -30,8 +35,6 @@ class BackendTemplate extends Contao\BackendTemplate
 		{
 			return parent::parse();
 		}
-		
-		echo var_dump(\Input::get('repository_submitbutton'));
 		
 		// get extension name which probably is extended by the version number
 		$strExtension = strpos($strExtension, '.') !== false ? substr($strExtension, 0, strpos($strExtension, '.')) : $strExtension;
@@ -48,9 +51,8 @@ class BackendTemplate extends Contao\BackendTemplate
 				
 			}
 		}
-		elseif(\Input::get('uninstall') != null && \Input::get('repository_submitbutton') != null && isset($GLOBALS['SETUP_EXT_HOOK'][$strExtension])) 
+		elseif(\Input::get('uninstall') != null && \Input::post('repository_submitbutton') != null && isset($GLOBALS['SETUP_EXT_HOOK'][$strExtension])) 
 		{
-			echo var_dump('$expression');
 			unset($GLOBALS['SETUP_EXT_HOOK'][$strExtension]);
 		}
 		
@@ -62,8 +64,6 @@ class BackendTemplate extends Contao\BackendTemplate
 			$GLOBALS['TL_HOOKS']['parseTemplate'] = array_merge((array)$GLOBALS['TL_HOOKS']['parseTemplate'], $arrExtension);
 					
 		}
-		
-		//echo var_dump($GLOBALS['TL_HOOKS']);
 		
 		static::$blnHookAdded = true;
 		return parent::parse();
