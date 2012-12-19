@@ -29,7 +29,8 @@ class BackendTemplate extends Contao\BackendTemplate
 	 */
 	public function parse()
 	{
-		$strExtension = \Input::get('install') != null ? \Input::get('install') : \Input::get('uninstall');	
+		
+		$strExtension = \Input::get('install') != null ? \Input::get('install') : (\Input::get('uninstall') != null ? \Input::get('uninstall') : \Input::get('update'));	
 		
 		if(static::$blnHookAdded || \Input::get('do') != 'repository_manager' || $strExtension == '')
 		{
